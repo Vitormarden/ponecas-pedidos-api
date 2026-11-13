@@ -1,0 +1,9 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/PonecasPedidosApi/PonecasPedidosApi.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/PonecasPedidosApi.IntegrationTests/PonecasPedidosApi.IntegrationTests.csproj" />
+    <Project Path="tests/PonecasPedidosApi.UnitTests/PonecasPedidosApi.UnitTests.csproj" />
+  </Folder>
+</Solution>
