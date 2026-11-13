@@ -31,9 +31,10 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Apply migrations on startup
-using (var scope = app.Services.CreateScope())
+// Apply migrations on startup (ignorado em ambiente de teste)
+if (!app.Environment.IsEnvironment("Testing"))
 {
+    using var scope = app.Services.CreateScope();
     var db = scope.ServiceProvider.GetRequiredService<PedidosDbContext>();
     try
     {
@@ -42,7 +43,7 @@ using (var scope = app.Services.CreateScope())
     }
     catch (Exception ex)
     {
-        Log.Fatal(ex, "Falha ao aplicar migrations — aplicação encerrando");
+        Log.Fatal(ex, "Falha ao aplicar migrations � aplicacao encerrando");
         throw;
     }
 }
