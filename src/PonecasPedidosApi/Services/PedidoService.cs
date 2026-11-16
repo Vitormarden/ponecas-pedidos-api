@@ -53,7 +53,7 @@ public class PedidoService : IPedidoService
     private static PedidoResponseDto MapToResponseDto(Pedido pedido) =>
         new(
             pedido.Id,
-            pedido.CriadoEm,
+            DateTime.SpecifyKind(pedido.CriadoEm, DateTimeKind.Utc),
             pedido.Status,
             pedido.Itens.Select(i => new ItemPedidoResponseDto(
                 i.Id,
