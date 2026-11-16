@@ -1,0 +1,151 @@
+openapi: 3.0.3
+info:
+  title: ponecas-pedidos-api
+  description: API RESTful para gerenciamento de pedidos.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080
+paths:
+  /api/pedidos:
+    post:
+      summary: Cria um novo pedido
+      operationId: criarPedido
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CriarPedidoDto'
+      responses:
+        '201':
+          description: Pedido criado
+          headers:
+            Location:
+              description: URI do pedido criado (/api/pedidos/{id})
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoResponseDto'
+        '400':
+          description: Payload inválido
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ValidationProblemDetails'
+        '500':
+          description: Erro interno
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /api/pedidos/{id}:
+    get:
+      summary: Consulta um pedido pelo identificador
+      operationId: obterPedido
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+            format: int32
+            minimum: 1
+      responses:
+        '200':
+          description: Pedido encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PedidoResponseDto'
+        '400':
+          description: Id inválido (menor ou igual a zero)
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Pedido não encontrado
+        '500':
+          description: Erro interno
+          content:
+            application/problem+json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    CriarPedidoDto:
+      type: object
+      required: [itens]
+      properties:
+        itens:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/CriarItemPedidoDto'
+    CriarItemPedidoDto:
+      type: object
+      required: [nomeProduto, quantidade, precoUnitario]
+      properties:
+        nomeProduto:
+          type: string
+          minLength: 1
+          maxLength: 200
+        quantidade:
+          type: integer
+          minimum: 1
+          maximum: 10000
+        precoUnitario:
+          type: number
+          minimum: 0.01
+          maximum: 999999.99
+    PedidoResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        criadoEm:
+          type: string
+          format: date-time
+        status:
+          type: string
+          example: Pendente
+        itens:
+          type: array
+          items:
+            $ref: '#/components/schemas/ItemPedidoResponseDto'
+    ItemPedidoResponseDto:
+      type: object
+      properties:
+        id:
+          type: integer
+        nomeProduto:
+          type: string
+        quantidade:
+          type: integer
+        precoUnitario:
+          type: number
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type: string
+        title:
+          type: string
+        status:
+          type: integer
+        detail:
+          type: string
+    ValidationProblemDetails:
+      allOf:
+        - $ref: '#/components/schemas/ProblemDetails'
+        - type: object
+          properties:
+            errors:
+              type: object
+              additionalProperties:
+                type: array
+                items:
+                  type: string
+
