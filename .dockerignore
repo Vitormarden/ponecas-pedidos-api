@@ -1,0 +1,13 @@
+**/bin/
+**/obj/
+coverage/
+TestResults/
+tests/
+docs/
+k6/
+.git/
+.github/
+.vs/
+.vscode/
+*.db
+.env
