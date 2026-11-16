@@ -3,4 +3,44 @@ design.md
 requirements.md
 tasks.md
 config.kiro
+tasks.meta.json
 
+
+# .NET build outputs
+bin/
+obj/
+
+# SQLite database files
+*.db
+*.db-shm
+*.db-wal
+
+# Environment variables
+.env
+
+# Test coverage
+coverage/
+TestResults/
+*.opencover.xml
+*.cobertura.xml
+
+# User-specific Visual Studio / Rider files
+*.user
+*.suo
+.vs/
+.idea/
+
+# NuGet
+*.nupkg
+*.snupkg
+packages/
+project.lock.json
+
+# Publish output
+publish/
+
+# IDE launch settings
+Properties/
+
+# HTTP client files
+*.http
