@@ -11,5 +11,5 @@ public class PedidoMetrics
             "Número total de pedidos criados com sucesso");
     }
 
-    public void IncrementarPedidosCriados() => _pedidosCriadosTotal.Inc();
+    public virtual void IncrementarPedidosCriados() => _pedidosCriadosTotal.Inc();
 }
